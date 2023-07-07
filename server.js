@@ -51,6 +51,6 @@ app.use(passport.session())
 app.use("/", mainRoutes)
 
 //Start Server
-app.listen(3000, () => {
+app.listen(4000, () => {
   logger.info("Server Has Started")
 })
