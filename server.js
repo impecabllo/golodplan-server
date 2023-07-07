@@ -14,7 +14,7 @@ require('dotenv').config()
 
 const mainRoutes = require("./routes/mainRoutes")
 
-const PORT = process.env.PORT || 4000
+const PORT = 3000
 
 const logger = pino({
   level: "debug"
