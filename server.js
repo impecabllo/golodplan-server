@@ -14,6 +14,8 @@ require('dotenv').config()
 
 const mainRoutes = require("./routes/mainRoutes")
 
+const PORT = process.env.PORT || 4000
+
 const logger = pino({
   level: "debug"
 })
@@ -22,8 +24,8 @@ const whitelist = ["http://localhost:3000", "https://client.dietgolodplan.ru"]
 
 // Middlewares
 app.use(helmet())
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -35,22 +37,22 @@ app.use(
     },
     credentials: true,
   })
-);
+)
 app.use(
   session({
     secret: process.env.SESSION_SECRET_CODE,
     resave: true,
     saveUninitialized: true,
   })
-);
-app.use(cookieParser(process.env.COOKIE_SECRET_CODE));
-app.use(passport.initialize());
-app.use(passport.session());
-// require("./passportConfig")(passport);
+)
+app.use(cookieParser(process.env.COOKIE_SECRET_CODE))
+app.use(passport.initialize())
+app.use(passport.session())
+// require("./passportConfig")(passport)
 
 app.use("/", mainRoutes)
 
 //Start Server
-app.listen(4000, () => {
-  logger.info("Server Has Started")
+app.listen(PORT, () => {
+  logger.info("Server Has Started on port: ", PORT)
 })
