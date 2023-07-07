@@ -14,8 +14,6 @@ require('dotenv').config()
 
 const mainRoutes = require("./routes/mainRoutes")
 
-const PORT = 3000
-
 const logger = pino({
   level: "debug"
 })
@@ -53,6 +51,6 @@ app.use(passport.session())
 app.use("/", mainRoutes)
 
 //Start Server
-app.listen(PORT, () => {
-  logger.info("Server Has Started on port: ", PORT)
+app.listen(3000, () => {
+  logger.info("Server Has Started")
 })
