@@ -12,6 +12,8 @@ const helmet = require("helmet")
 const app = express()
 require('dotenv').config()
 
+const helper = require("./lib/helper")
+
 const mainRoutes = require("./routes/mainRoutes")
 
 const logger = pino({
@@ -19,6 +21,15 @@ const logger = pino({
 })
 
 const whitelist = ["http://localhost:3000", "https://client.dietgolodplan.ru"]
+
+// Mongoose
+connectMongo()
+  .then(() => logger.info("Mongo connected"))
+  .catch(err => logger.error(err))
+
+async function connectMongo() {
+  await mongoose.connect(helper.getMongoUrl())
+}
 
 // Middlewares
 app.use(helmet())
@@ -46,7 +57,7 @@ app.use(
 app.use(cookieParser(process.env.COOKIE_SECRET_CODE))
 app.use(passport.initialize())
 app.use(passport.session())
-// require("./passportConfig")(passport)
+require("./lib/passportConfig")(passport)
 
 app.use("/", mainRoutes)
 
